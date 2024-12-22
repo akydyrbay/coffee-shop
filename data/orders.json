@@ -1,0 +1,82 @@
+[
+  {
+    "order_id": "92",
+    "customer_name": "John Doe",
+    "items": [
+      {
+        "product_id": "espresso",
+        "quantity": 2
+      },
+      {
+        "product_id": "muffin",
+        "quantity": 1
+      },
+      {
+        "product_id": "espresso",
+        "quantity": 2
+      },
+      {
+        "product_id": "muffin",
+        "quantity": 1
+      }
+    ],
+    "status": "open",
+    "created_at": "2024-11-15T10:36:27Z"
+  },
+  {
+    "order_id": "34",
+    "customer_name": "John Doe",
+    "items": [
+      {
+        "product_id": "espresso",
+        "quantity": 2
+      },
+      {
+        "product_id": "muffin",
+        "quantity": 1
+      },
+      {
+        "product_id": "espresso",
+        "quantity": 2
+      },
+      {
+        "product_id": "muffin",
+        "quantity": 1
+      }
+    ],
+    "status": "closed",
+    "created_at": "2024-11-15T10:36:27Z"
+  },
+  {
+    "order_id": "14",
+    "customer_name": "John Doe",
+    "items": [
+      {
+        "product_id": "espresso",
+        "quantity": 2
+      },
+      {
+        "product_id": "muffin",
+        "quantity": 1
+      }
+    ],
+    "status": "open",
+    "created_at": "2024-11-15T11:21:57Z"
+  },
+  {
+    "order_id": "80",
+    "customer_name": "John Doe",
+    "items": [
+      {
+        "product_id": "espresso",
+        "quantity": 2
+      },
+      {
+        "product_id": "muffin",
+        "quantity": 1
+      }
+    ],
+    "status": "open",
+    "created_at": "2024-11-15T11:21:59Z"
+  }
+]

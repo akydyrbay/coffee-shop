@@ -1,0 +1,104 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36" version="25.0.3">
+  <diagram name="Page-1" id="-Lofyljg84Q4TSNu2HTE">
+    <mxGraphModel dx="3173" dy="1419" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="2336" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="M9vnRnVPpcQp0MmXC5jN-47" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="M9vnRnVPpcQp0MmXC5jN-19" target="M9vnRnVPpcQp0MmXC5jN-35">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="M9vnRnVPpcQp0MmXC5jN-54" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="M9vnRnVPpcQp0MmXC5jN-19" target="M9vnRnVPpcQp0MmXC5jN-41">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="M9vnRnVPpcQp0MmXC5jN-19" value="orders" style="swimlane;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-1120" y="10" width="430" height="220" as="geometry" />
+        </mxCell>
+        <mxCell id="M9vnRnVPpcQp0MmXC5jN-23" value="&lt;li style=&quot;white-space: nowrap; line-height: 210%;&quot;&gt;&lt;code&gt;order_id&lt;/code&gt;&amp;nbsp;(Primary Key)&lt;/li&gt;&lt;li style=&quot;white-space: nowrap; line-height: 210%;&quot;&gt;&lt;code&gt;customer_id&lt;/code&gt;&amp;nbsp;(Foreign Key to&amp;nbsp;&lt;code&gt;customers&lt;/code&gt;)&lt;/li&gt;&lt;li style=&quot;white-space: nowrap; line-height: 210%;&quot;&gt;&lt;code&gt;order_date&lt;/code&gt;&amp;nbsp;(Timestamp with time zone)&lt;/li&gt;&lt;li style=&quot;white-space: nowrap; line-height: 210%;&quot;&gt;&lt;code&gt;total_amount&lt;/code&gt;&amp;nbsp;(Numeric)&lt;/li&gt;&lt;li style=&quot;white-space: nowrap; line-height: 210%;&quot;&gt;&lt;code&gt;special_instructions&lt;/code&gt;&amp;nbsp;(JSONB)&lt;/li&gt;&lt;li style=&quot;white-space: nowrap; line-height: 210%;&quot;&gt;&lt;code&gt;order_status&lt;/code&gt;&amp;nbsp;(ENUM: &#39;pending&#39;, &#39;preparing&#39;, &#39;completed&#39;, &#39;cancelled&#39;)&amp;nbsp;&lt;/li&gt;&lt;li style=&quot;white-space: nowrap; line-height: 210%;&quot;&gt;&lt;code&gt;payment_method&lt;/code&gt;&amp;nbsp;(ENUM: &#39;credit_card&#39;, &#39;cash&#39;, &#39;online&#39;, &#39;gift_card&#39;)&amp;nbsp;&lt;/li&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="M9vnRnVPpcQp0MmXC5jN-19">
+          <mxGeometry x="15" y="15" width="400" height="210" as="geometry" />
+        </mxCell>
+        <mxCell id="M9vnRnVPpcQp0MmXC5jN-25" value="order_items" style="swimlane;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-1060" y="340" width="310" height="200" as="geometry" />
+        </mxCell>
+        <mxCell id="M9vnRnVPpcQp0MmXC5jN-26" value="&lt;li style=&quot;white-space: nowrap; line-height: 210%;&quot;&gt;&lt;code style=&quot;background-color: initial; white-space: normal;&quot;&gt;order_item_id&lt;/code&gt;&lt;span style=&quot;background-color: initial; white-space: normal;&quot;&gt; (Primary Key)&lt;/span&gt;&lt;br&gt;&lt;/li&gt;&lt;li style=&quot;line-height: 210%;&quot;&gt;&lt;code&gt;order_id&lt;/code&gt; (Foreign Key to &lt;code&gt;orders&lt;/code&gt;)&lt;/li&gt;&lt;li style=&quot;line-height: 210%;&quot;&gt;&lt;code&gt;menu_item_id&lt;/code&gt; (Foreign Key to &lt;code&gt;menu_items&lt;/code&gt;)&lt;/li&gt;&lt;li style=&quot;line-height: 210%;&quot;&gt;&lt;code&gt;quantity&lt;/code&gt; (Integer)&lt;/li&gt;&lt;li style=&quot;line-height: 210%;&quot;&gt;&lt;code&gt;price_at_time&lt;/code&gt; (Numeric).&lt;/li&gt;&lt;li style=&quot;line-height: 210%;&quot;&gt;&lt;code&gt;customizations&lt;/code&gt; (JSONB)&amp;nbsp;&lt;/li&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="M9vnRnVPpcQp0MmXC5jN-25">
+          <mxGeometry x="10" y="30" width="285" height="162.5" as="geometry" />
+        </mxCell>
+        <mxCell id="M9vnRnVPpcQp0MmXC5jN-52" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="M9vnRnVPpcQp0MmXC5jN-27" target="M9vnRnVPpcQp0MmXC5jN-37">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="M9vnRnVPpcQp0MmXC5jN-55" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="M9vnRnVPpcQp0MmXC5jN-27" target="M9vnRnVPpcQp0MmXC5jN-33">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="M9vnRnVPpcQp0MmXC5jN-27" value="menu_items" style="swimlane;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-1092.5" y="640" width="370" height="190" as="geometry" />
+        </mxCell>
+        <mxCell id="M9vnRnVPpcQp0MmXC5jN-28" value="&lt;li style=&quot;white-space: nowrap; line-height: 210%;&quot;&gt;&lt;code style=&quot;background-color: initial; white-space: normal;&quot;&gt;menu_item_id&lt;/code&gt;&lt;span style=&quot;background-color: initial; white-space: normal;&quot;&gt; (Primary Key)&lt;/span&gt;&lt;br&gt;&lt;/li&gt;&lt;li style=&quot;line-height: 210%;&quot;&gt;&lt;code&gt;name&lt;/code&gt; (Text)&amp;nbsp;&lt;/li&gt;&lt;li style=&quot;line-height: 210%;&quot;&gt;&lt;code style=&quot;background-color: initial;&quot;&gt;category&lt;/code&gt;&lt;span style=&quot;background-color: initial;&quot;&gt; (ENUM: &#39;coffee&#39;, &#39;tea&#39;, &#39;snacks&#39;, &#39;pastries&#39;, drinks&#39;)&lt;/span&gt;&lt;/li&gt;&lt;li style=&quot;line-height: 210%;&quot;&gt;&lt;code&gt;price&lt;/code&gt; (Numeric)&lt;span style=&quot;background-color: initial;&quot;&gt;&amp;nbsp;&lt;/span&gt;&lt;/li&gt;&lt;li style=&quot;line-height: 210%;&quot;&gt;&lt;code&gt;available&lt;/code&gt; (Boolean)&amp;nbsp;&lt;/li&gt;&lt;li style=&quot;line-height: 210%;&quot;&gt;&lt;code&gt;tags&lt;/code&gt; (ARRAY of Text) -&amp;nbsp;Tags like &#39;vegan&#39;, &#39;gluten-free&#39;, &#39;hot&#39;&lt;/li&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="M9vnRnVPpcQp0MmXC5jN-27">
+          <mxGeometry x="13.75" y="28.75" width="342.5" height="142.5" as="geometry" />
+        </mxCell>
+        <mxCell id="M9vnRnVPpcQp0MmXC5jN-29" value="menu_item_ingredients" style="swimlane;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-1570" y="360" width="320" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="M9vnRnVPpcQp0MmXC5jN-30" value="&lt;li style=&quot;white-space: nowrap; line-height: 210%;&quot;&gt;&lt;code style=&quot;background-color: initial; white-space: normal;&quot;&gt;menu_item_id&lt;/code&gt;&lt;span style=&quot;background-color: initial; white-space: normal;&quot;&gt; (Foreign Key to &lt;/span&gt;&lt;code style=&quot;background-color: initial; white-space: normal;&quot;&gt;menu_items&lt;/code&gt;&lt;span style=&quot;background-color: initial; white-space: normal;&quot;&gt;)&lt;/span&gt;&lt;br&gt;&lt;/li&gt;&lt;li style=&quot;line-height: 210%;&quot;&gt;&lt;code&gt;ingredient_id&lt;/code&gt; (Foreign Key to &lt;code&gt;ingredients&lt;/code&gt;)&lt;/li&gt;&lt;li style=&quot;line-height: 210%;&quot;&gt;&lt;code&gt;quantity&lt;/code&gt; (Numeric)&lt;/li&gt;&lt;li style=&quot;line-height: 210%;&quot;&gt;&lt;code&gt;unit&lt;/code&gt; (Text)&lt;/li&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="M9vnRnVPpcQp0MmXC5jN-29">
+          <mxGeometry x="10" y="15" width="320" height="145" as="geometry" />
+        </mxCell>
+        <mxCell id="M9vnRnVPpcQp0MmXC5jN-31" value="ingredients" style="swimlane;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-1620" y="640" width="420" height="180" as="geometry" />
+        </mxCell>
+        <mxCell id="M9vnRnVPpcQp0MmXC5jN-32" value="&lt;li style=&quot;white-space: nowrap; line-height: 210%;&quot;&gt;&lt;code style=&quot;background-color: initial; white-space: normal;&quot;&gt;ingredient_id&lt;/code&gt;&lt;span style=&quot;background-color: initial; white-space: normal;&quot;&gt; (Primary Key)&lt;/span&gt;&lt;br&gt;&lt;/li&gt;&lt;li style=&quot;line-height: 210%;&quot;&gt;&lt;code&gt;name&lt;/code&gt; (Text) - Ingredient name (e.g., &quot;Sugar&quot;, &quot;Milk&quot;).&lt;/li&gt;&lt;li style=&quot;line-height: 210%;&quot;&gt;&lt;code&gt;allergens&lt;/code&gt; (ARRAY of Text) - List of allergens (e.g., &#39;gluten&#39;, &#39;dairy&#39;).&lt;/li&gt;&lt;li style=&quot;line-height: 210%;&quot;&gt;&lt;code&gt;stock_level&lt;/code&gt; (Numeric) - Current stock quantity.&lt;/li&gt;&lt;li style=&quot;line-height: 210%;&quot;&gt;&lt;code&gt;unit_type&lt;/code&gt; (Text) - Unit of measurement (e.g., &#39;kg&#39;, &#39;liter&#39;).&lt;/li&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="M9vnRnVPpcQp0MmXC5jN-31">
+          <mxGeometry x="14" y="20" width="392" height="162.5" as="geometry" />
+        </mxCell>
+        <mxCell id="M9vnRnVPpcQp0MmXC5jN-33" value="inventory" style="swimlane;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-450" y="660" width="310" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="M9vnRnVPpcQp0MmXC5jN-34" value="&lt;li style=&quot;white-space: nowrap; line-height: 210%;&quot;&gt;&lt;code style=&quot;background-color: initial; white-space: normal;&quot;&gt;inventory_id&lt;/code&gt;&lt;span style=&quot;background-color: initial; white-space: normal;&quot;&gt; (Primary Key)&lt;/span&gt;&lt;br&gt;&lt;/li&gt;&lt;li style=&quot;line-height: 210%;&quot;&gt;&lt;code&gt;ingredient_id&lt;/code&gt; (Foreign Key to &lt;code&gt;ingredients&lt;/code&gt;)&lt;/li&gt;&lt;li style=&quot;line-height: 210%;&quot;&gt;&lt;code&gt;quantity_in_stock&lt;/code&gt; (Numeric)&amp;nbsp;&lt;/li&gt;&lt;li style=&quot;line-height: 210%;&quot;&gt;&lt;code style=&quot;background-color: initial;&quot;&gt;last_updated&lt;/code&gt;&lt;span style=&quot;background-color: initial;&quot;&gt; (Timestamp with time zone)&lt;/span&gt;&lt;/li&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="M9vnRnVPpcQp0MmXC5jN-33">
+          <mxGeometry x="10" y="25" width="303.13" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="M9vnRnVPpcQp0MmXC5jN-35" value="order_status_history" style="swimlane;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-1600" y="45" width="380" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="M9vnRnVPpcQp0MmXC5jN-36" value="&lt;li style=&quot;white-space: nowrap; line-height: 210%;&quot;&gt;&lt;code style=&quot;background-color: initial; white-space: normal;&quot;&gt;status_id&lt;/code&gt;&lt;span style=&quot;background-color: initial; white-space: normal;&quot;&gt; (Primary Key)&lt;/span&gt;&lt;br&gt;&lt;/li&gt;&lt;li style=&quot;line-height: 210%;&quot;&gt;&lt;code&gt;order_id&lt;/code&gt; (Foreign Key to &lt;code&gt;orders&lt;/code&gt;)&lt;/li&gt;&lt;li style=&quot;line-height: 210%;&quot;&gt;&lt;code&gt;status&lt;/code&gt; (ENUM: &#39;pending&#39;, &#39;preparing&#39;, &#39;completed&#39;, &#39;cancelled&#39;)&lt;/li&gt;&lt;li style=&quot;line-height: 210%;&quot;&gt;&lt;code&gt;timestamp&lt;/code&gt; (Timestamp with time zone)&lt;/li&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="M9vnRnVPpcQp0MmXC5jN-35">
+          <mxGeometry x="12.5" y="30" width="355" height="122.5" as="geometry" />
+        </mxCell>
+        <mxCell id="M9vnRnVPpcQp0MmXC5jN-37" value="price_history" style="swimlane;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-1057.5" y="910" width="300" height="170" as="geometry" />
+        </mxCell>
+        <mxCell id="M9vnRnVPpcQp0MmXC5jN-38" value="&lt;li style=&quot;white-space: nowrap; line-height: 210%;&quot;&gt;&lt;code style=&quot;background-color: initial; white-space: normal;&quot;&gt;price_history_id&lt;/code&gt;&lt;span style=&quot;background-color: initial; white-space: normal;&quot;&gt; (Primary Key)&lt;/span&gt;&lt;br&gt;&lt;/li&gt;&lt;li style=&quot;line-height: 210%;&quot;&gt;&lt;code&gt;menu_item_id&lt;/code&gt; (Foreign Key to &lt;code&gt;menu_items&lt;/code&gt;)&lt;/li&gt;&lt;li style=&quot;line-height: 210%;&quot;&gt;&lt;code&gt;old_price&lt;/code&gt; (Numeric)&lt;/li&gt;&lt;li style=&quot;line-height: 210%;&quot;&gt;&lt;code&gt;new_price&lt;/code&gt; (Numeric)&lt;/li&gt;&lt;li style=&quot;line-height: 210%;&quot;&gt;&lt;code&gt;effective_date&lt;/code&gt; (Timestamp with time zone)&lt;/li&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="M9vnRnVPpcQp0MmXC5jN-37">
+          <mxGeometry x="14" y="20" width="286" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="M9vnRnVPpcQp0MmXC5jN-57" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="M9vnRnVPpcQp0MmXC5jN-39" target="M9vnRnVPpcQp0MmXC5jN-33">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="M9vnRnVPpcQp0MmXC5jN-39" value="inventory_transactions" style="swimlane;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-580" y="350" width="570" height="180" as="geometry" />
+        </mxCell>
+        <mxCell id="M9vnRnVPpcQp0MmXC5jN-40" value="&lt;li style=&quot;white-space: nowrap; line-height: 210%;&quot;&gt;&lt;code style=&quot;background-color: initial; white-space: normal;&quot;&gt;transaction_id&lt;/code&gt;&lt;span style=&quot;background-color: initial; white-space: normal;&quot;&gt; (Primary Key)&lt;/span&gt;&lt;br&gt;&lt;/li&gt;&lt;li style=&quot;line-height: 210%;&quot;&gt;&lt;code&gt;ingredient_id&lt;/code&gt; (Foreign Key to &lt;code&gt;ingredients&lt;/code&gt;)&lt;/li&gt;&lt;li style=&quot;line-height: 210%;&quot;&gt;&lt;code&gt;change_amount&lt;/code&gt; (Numeric) - The amount by which the stock changed (can be negative for usage).&lt;/li&gt;&lt;li style=&quot;line-height: 210%;&quot;&gt;&lt;code&gt;transaction_type&lt;/code&gt; (ENUM: &#39;purchase&#39;, &#39;sale&#39;, &#39;usage&#39;, &#39;adjustment&#39;)&lt;/li&gt;&lt;li style=&quot;line-height: 210%;&quot;&gt;&lt;code&gt;timestamp&lt;/code&gt; (Timestamp with time zone)&lt;/li&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="M9vnRnVPpcQp0MmXC5jN-39">
+          <mxGeometry x="12.5" y="30" width="552" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="M9vnRnVPpcQp0MmXC5jN-56" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="M9vnRnVPpcQp0MmXC5jN-41" target="M9vnRnVPpcQp0MmXC5jN-39">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="M9vnRnVPpcQp0MmXC5jN-41" value="staff" style="swimlane;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-513.75" y="20" width="437.5" height="200" as="geometry" />
+        </mxCell>
+        <mxCell id="M9vnRnVPpcQp0MmXC5jN-42" value="&lt;li style=&quot;white-space: nowrap; line-height: 210%;&quot;&gt;&lt;code style=&quot;background-color: initial; white-space: normal;&quot;&gt;staff_id&lt;/code&gt;&lt;span style=&quot;background-color: initial; white-space: normal;&quot;&gt; (Primary Key)&lt;/span&gt;&lt;br&gt;&lt;/li&gt;&lt;li style=&quot;line-height: 210%;&quot;&gt;&lt;code&gt;name&lt;/code&gt; (Text)&lt;/li&gt;&lt;li style=&quot;line-height: 210%;&quot;&gt;&lt;code&gt;role&lt;/code&gt; (ENUM: &#39;cashier&#39;, &#39;barista&#39;, &#39;manager&#39;, &#39;chef&#39;)&lt;/li&gt;&lt;li style=&quot;line-height: 210%;&quot;&gt;&lt;code&gt;email&lt;/code&gt; (Text)&lt;/li&gt;&lt;li style=&quot;line-height: 210%;&quot;&gt;&lt;code&gt;phone_number&lt;/code&gt; (Text)&lt;/li&gt;&lt;li style=&quot;line-height: 210%;&quot;&gt;&lt;code&gt;schedule&lt;/code&gt; (JSONB) - Stores weekly work schedules with dates and hours.&lt;/li&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="M9vnRnVPpcQp0MmXC5jN-41">
+          <mxGeometry x="12.5" y="40" width="437.5" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="M9vnRnVPpcQp0MmXC5jN-50" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="M9vnRnVPpcQp0MmXC5jN-23" target="M9vnRnVPpcQp0MmXC5jN-25">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="M9vnRnVPpcQp0MmXC5jN-48" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="M9vnRnVPpcQp0MmXC5jN-36" target="M9vnRnVPpcQp0MmXC5jN-29">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="-1410.3333333333333" y="350" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="M9vnRnVPpcQp0MmXC5jN-49" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="M9vnRnVPpcQp0MmXC5jN-30" target="M9vnRnVPpcQp0MmXC5jN-31">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="-1410" y="630" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="M9vnRnVPpcQp0MmXC5jN-53" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="M9vnRnVPpcQp0MmXC5jN-26" target="M9vnRnVPpcQp0MmXC5jN-27">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
