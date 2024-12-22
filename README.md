@@ -1,11 +1,11 @@
 # coffee
 
-Project Overview
-This project focuses on transitioning from a JSON-based data storage solution to a PostgreSQL relational database for managing business operations. The goal is to refactor existing handlers and the data access layer (repositories) to interact with PostgreSQL using SQL queries, improving scalability and maintainability. In addition to the refactor, new features for aggregation and reporting will be implemented to leverage PostgreSQL's powerful querying capabilities.
+## Project Overview
+This project focuses on data storage solution on PostgreSQL relational database for managing business operations. The goal is to refactor existing handlers and the data access layer (repositories) to interact with PostgreSQL using SQL queries, improving scalability and maintainability. In addition to the refactor, new features for aggregation and reporting will be implemented to leverage PostgreSQL's powerful querying capabilities.
 
 By moving to PostgreSQL, the application can benefit from the robustness of relational databases, allowing for more complex operations, easier data consistency, and improved performance. You will gain hands-on experience with SQL, PostgreSQL, and the principles of database design, including table relationships and advanced data types.
 
-Learning Objectives
+## Learning Objectives
 1. SQL
 Develop proficiency in writing SQL queries to interact with relational databases.
 Implement basic CRUD (Create, Read, Update, Delete) operations using SQL.
@@ -26,13 +26,13 @@ This project involves refactoring an application to transition from a JSON-based
 
 In addition, new features will be implemented for reporting and aggregation, such as tracking inventory changes, calculating sales data, and monitoring status changes in business operations. PostgreSQL’s advanced SQL functions, including aggregation tools, will be leveraged to enable complex reporting and analysis.
 
-Context
+## Context
 As systems scale, databases that rely on JSON for data storage often become difficult to manage and maintain. Relational databases, like PostgreSQL, provide more robust data management, scalability, and advanced querying capabilities, making them a better solution for growing applications. This project aims to address the challenges of using a JSON-based system by transitioning to a more structured, performant, and scalable PostgreSQL database.
 
 The project will involve creating a normalized database schema, defining the relationships between entities, and refactoring the application to use SQL queries for CRUD operations. Additionally, it will introduce new functionality for aggregating and reporting business metrics, leveraging PostgreSQL’s powerful aggregation capabilities.
 
 
-Relationships of ERD
+### Relationships of ERD
 orders is linked to customers (via customer_id).
 order_items connects orders to menu_items, storing quantity and price at the time of the order.
 menu_items is connected to menu_item_ingredients, which links the items to the ingredients, including quantities for recipes.
