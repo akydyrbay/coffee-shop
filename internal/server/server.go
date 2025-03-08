@@ -4,17 +4,28 @@ import (
 	"flag"
 	"fmt"
 	"log"
+	"log/slog"
 	"net/http"
 	"os"
 	"path/filepath"
 	"strconv"
 
-	"coffee/internal/dal"
-	"coffee/internal/handler"
-	"coffee/internal/service"
+	"coffee-shop/internal/dal"
+	"coffee-shop/internal/handler"
+	"coffee-shop/internal/service"
+
+	"coffee-shop/postgres"
+
+	_ "github.com/lib/pq"
 )
 
 func StartTheCafe() {
+	db, err := postgres.CheckDB()
+	if err != nil {
+		slog.Error("Failed to start program", "CheckDB err:", err)
+		log.Fatal(err)
+	}
+	defer db.Close()
 	port := flag.Int("port", 8080, "The server port")
 	dir := flag.String("dir", "data", "The directory to serve")
 	help := flag.Bool("help", false, "Show help")
@@ -27,13 +38,8 @@ func StartTheCafe() {
 		printHelpUsage()
 		os.Exit(0)
 	}
-	_, err := os.Stat(*dir)
-	if os.IsNotExist(err) {
-		log.Fatalf("The directory %s does not exist", *dir)
-	}
-	if os.IsExist(os.ErrNotExist) {
-	}
-	inventoryRepo := dal.NewInventoryRepo(filepath.Join(*dir, "inventory.json"))
+
+	inventoryRepo := dal.NewInventoryRepo(db)
 	inventoryService := service.NewInventoryService(inventoryRepo)
 	inventoryHandler := handler.NewInventoryHandler(inventoryService)
 
@@ -41,20 +47,20 @@ func StartTheCafe() {
 	menuService := service.NewMenuService(menuRepo)
 	menuHandler := handler.NewMenuHandler(menuService)
 
-	orderRepo := dal.NewOrderRepo(filepath.Join(*dir, "orders.json"))
-	orderService := service.NewOrderService(orderRepo, menuRepo, inventoryRepo)
-	orderHandler := handler.NewOrderHandler(orderService)
+	// orderRepo := dal.NewOrderRepo(filepath.Join(*dir, "orders.json"))
+	// orderService := service.NewOrderService(orderRepo, menuRepo, inventoryRepo)
+	// orderHandler := handler.NewOrderHandler(orderService)
 
-	aggService := service.NewAggragationService(orderRepo, menuRepo)
-	aggHandler := handler.NewAggragationHandler(aggService)
+	// aggService := service.NewAggragationService(orderRepo, menuRepo)
+	// aggHandler := handler.NewAggragationHandler(aggService)
 	mux := http.NewServeMux()
 
-	mux.HandleFunc("POST /orders", orderHandler.PostOrder)
-	mux.HandleFunc("GET /orders", orderHandler.GetAllOrders)
-	mux.HandleFunc("GET /orders/{id}", orderHandler.GetOrderByID)
-	mux.HandleFunc("PUT /orders/{id}", orderHandler.PutOrderByID)
-	mux.HandleFunc("DELETE /orders/{id}", orderHandler.DeleteOrderByID)
-	mux.HandleFunc("POST /orders/{id}/close", orderHandler.PostCloseOrder)
+	// mux.HandleFunc("POST /orders", orderHandler.PostOrder)
+	// mux.HandleFunc("GET /orders", orderHandler.GetAllOrders)
+	// mux.HandleFunc("GET /orders/{id}", orderHandler.GetOrderByID)
+	// mux.HandleFunc("PUT /orders/{id}", orderHandler.PutOrderByID)
+	// mux.HandleFunc("DELETE /orders/{id}", orderHandler.DeleteOrderByID)
+	// mux.HandleFunc("POST /orders/{id}/close", orderHandler.PostCloseOrder)
 
 	mux.HandleFunc("POST /inventory", inventoryHandler.PostItem)
 	mux.HandleFunc("GET /inventory", inventoryHandler.GetAllItem)
@@ -68,8 +74,8 @@ func StartTheCafe() {
 	mux.HandleFunc("PUT /menu/{id}", menuHandler.PutMenuHandler)
 	mux.HandleFunc("DELETE /menu/{id}", menuHandler.DeleteMenuHandler)
 
-	mux.HandleFunc("GET /reports/total-sales", aggHandler.GetAllSales)
-	mux.HandleFunc("GET /reports/popular-items", aggHandler.GetPopularSales)
+	// mux.HandleFunc("GET /reports/total-sales", aggHandler.GetAllSales)
+	// mux.HandleFunc("GET /reports/popular-items", aggHandler.GetPopularSales)
 
 	log.Fatal(http.ListenAndServe(":"+strconv.Itoa(*port), mux))
 }

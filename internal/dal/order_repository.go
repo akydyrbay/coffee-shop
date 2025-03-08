@@ -2,8 +2,9 @@ package dal
 
 import (
 	"encoding/json"
-	"hot-coffee/models"
 	"os"
+
+	"coffee-shop/models"
 )
 
 const pathOrder = "data/orders.json"

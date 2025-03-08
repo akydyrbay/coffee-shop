@@ -1,6 +1,6 @@
 package main
 
-import "coffee/internal/server"
+import "coffee-shop/internal/server"
 
 func main() {
 	server.StartTheCafe()

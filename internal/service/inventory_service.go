@@ -3,8 +3,8 @@ package service
 import (
 	"errors"
 
-	"coffee/internal/dal"
-	"coffee/models"
+	"coffee-shop/internal/dal"
+	"coffee-shop/models"
 )
 
 type InventoryService interface {
@@ -39,7 +39,7 @@ func (s *inventoryService) AddInventoryItem(item models.InventoryItem) error {
 	inventories = append(inventories, item)
 
 	if err := s.inventoryRepo.SaveAll(inventories); err != nil {
-		return err
+		return errors.New("failed to save inventory items")
 	}
 
 	return nil
@@ -65,7 +65,7 @@ func (s *inventoryService) DeleteInventoryItem(id string) error {
 func (s *inventoryService) GetInventoryItem() ([]models.InventoryItem, error) {
 	inventories, err := s.inventoryRepo.GetAll()
 	if err != nil {
-		return []models.InventoryItem{}, err
+		return []models.InventoryItem{}, errors.New("failed to get inventory items")
 	}
 
 	return inventories, nil

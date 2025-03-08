@@ -5,8 +5,8 @@ import (
 	"log/slog"
 	"net/http"
 
-	"coffee/internal/service"
-	"coffee/models"
+	"coffee-shop/internal/service"
+	"coffee-shop/models"
 )
 
 type InventoryHandler interface {

@@ -1,3 +1,5 @@
-module coffee
+module coffee-shop
 
 go 1.22.6
+
+require github.com/lib/pq v1.10.9 // indirect

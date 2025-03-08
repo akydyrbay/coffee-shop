@@ -3,8 +3,8 @@ package service
 import (
 	"errors"
 
-	"coffee/internal/dal"
-	"coffee/models"
+	"coffee-shop/internal/dal"
+	"coffee-shop/models"
 )
 
 func IsValidOrder(order models.Order, menuRepo dal.MenuRepository, inventRepo dal.InventoryRepository) error {

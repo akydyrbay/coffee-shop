@@ -3,8 +3,8 @@ package service
 import (
 	"errors"
 
-	"coffee/internal/dal"
-	"coffee/models"
+	"coffee-shop/internal/dal"
+	"coffee-shop/models"
 )
 
 type MenuServiceInterface interface {

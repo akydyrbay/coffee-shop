@@ -1,9 +1,9 @@
 package dal
 
 import (
-	"encoding/json"
-	"hot-coffee/models"
-	"os"
+	"database/sql"
+
+	"coffee-shop/models"
 )
 
 type InventoryRepository interface {
@@ -13,59 +13,50 @@ type InventoryRepository interface {
 }
 
 type inventoryRepo struct {
-	path string
+	DB *sql.DB
 }
 
-func NewInventoryRepo(path string) *inventoryRepo {
-	return &inventoryRepo{path: path}
+func NewInventoryRepo(db *sql.DB) *inventoryRepo {
+	return &inventoryRepo{DB: db}
 }
 
-func (r *inventoryRepo) SaveAll(item []models.InventoryItem) error {
-	jsonData, err := json.MarshalIndent(item, "", "  ")
+func (r *inventoryRepo) SaveAll(items []models.InventoryItem) error {
+	tx, err := r.DB.Begin()
 	if err != nil {
 		return err
 	}
-	_, err = os.Stat(r.path)
-	if os.IsNotExist(err) {
-		file, err := os.Create(r.path)
+
+	for _, item := range items {
+		_, err = tx.Exec(`INSERT INTO inventory (ingredient_id, name, quantity, unit)
+	VALUES ($1, $2, $3, $4)
+	`, item.IngredientID, item.Name, item.Quantity, item.Unit)
 		if err != nil {
+			tx.Rollback()
 			return err
 		}
-		file.Close()
 	}
-	err = os.WriteFile(r.path, jsonData, 0o644)
-	if err != nil {
-		return err
-	}
-
-	return nil
+	return tx.Commit()
 }
 
 func (r *inventoryRepo) GetAll() ([]models.InventoryItem, error) {
-	_, err := os.Stat(r.path)
-	if os.IsNotExist(err) {
-		file, err := os.Create(r.path)
-		if err != nil {
-			return nil, err
-		}
-		defer file.Close()
-	}
-	byteValue, err := os.ReadFile(r.path)
+	rows, err := r.DB.Query("SELECT ingredient_id, name, quantity,unit FROM inventory")
 	if err != nil {
 		return nil, err
 	}
+	defer rows.Close()
 
-	if len(byteValue) == 0 {
-		return []models.InventoryItem{}, nil
+	var items []models.InventoryItem
+	for rows.Next() {
+		var item models.InventoryItem
+		if err := rows.Scan(&item.IngredientID, &item.Name, &item.Quantity, &item.Unit); err != nil {
+			return nil, err
+		}
+		items = append(items, item)
 	}
-
-	var inventoryData []models.InventoryItem
-
-	if err := json.Unmarshal(byteValue, &inventoryData); err != nil {
+	if err := rows.Err(); err != nil {
 		return nil, err
 	}
-
-	return inventoryData, nil
+	return items, nil
 }
 
 func (r *inventoryRepo) Exists(item models.InventoryItem) (bool, error) {

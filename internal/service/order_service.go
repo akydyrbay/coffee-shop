@@ -7,8 +7,8 @@ import (
 	"strconv"
 	"time"
 
-	"coffee/internal/dal"
-	"coffee/models"
+	"coffee-shop/internal/dal"
+	"coffee-shop/models"
 )
 
 type OrderService interface {
