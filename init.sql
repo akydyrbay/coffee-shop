@@ -31,7 +31,8 @@ CREATE TABLE inventory (
     ingredient_id VARCHAR(255) PRIMARY KEY,
     name VARCHAR(255),
     quantity INT,
-    unit VARCHAR(255)
+    unit VARCHAR(255),
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
     -- CONSTRAINT positive_quantity CHECK (quantity >= 0),
     -- CONSTRAINT positive_minimum_quantity CHECK (minimum_quantity >= 0),
     -- CONSTRAINT positive_unit_price CHECK (unit_price > 0)
