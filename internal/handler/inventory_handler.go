@@ -26,7 +26,7 @@ func NewInventoryHandler(inventoryService service.InventoryService) *inventoryHa
 }
 
 func (h *inventoryHandler) PostItem(w http.ResponseWriter, r *http.Request) {
-	var newInventoryItem models.InventoryItem
+	var newInventoryItem []models.InventoryItem
 	if err := json.NewDecoder(r.Body).Decode(&newInventoryItem); err != nil {
 		RespondWithJson(w, ErrorResponse{Message: err.Error()}, http.StatusNotFound)
 		slog.Error("Failed to decode", err.Error(), "no new item to post")
@@ -43,7 +43,7 @@ func (h *inventoryHandler) PostItem(w http.ResponseWriter, r *http.Request) {
 		slog.Error("Failed AddInventoryItem", err.Error(), "no new item to post")
 		return
 	}
-	slog.Info("Inventory posted", "inventoryID", newInventoryItem.IngredientID)
+	slog.Info("Inventory posted", "inventoryID", newInventoryItem[0].ID)
 	w.WriteHeader(http.StatusCreated)
 }
 
@@ -82,7 +82,7 @@ func (h *inventoryHandler) GetItemById(w http.ResponseWriter, r *http.Request) {
 		slog.Error("Failed to get", err.Error(), "no new item to post")
 		return
 	}
-	slog.Info("Inventory got", "inventoryID", inventoryItem.IngredientID)
+	slog.Info("Inventory got", "inventoryID", inventoryItem.ID)
 }
 
 func (h *inventoryHandler) DeleteItem(w http.ResponseWriter, r *http.Request) {
@@ -110,5 +110,5 @@ func (h *inventoryHandler) PutItem(w http.ResponseWriter, r *http.Request) {
 		slog.Error("Failed to MarshalIndent", err.Error(), "no new item to post")
 		return
 	}
-	slog.Info("Inventory put", "inventoryID", inventoryItem.IngredientID)
+	slog.Info("Inventory put", "inventoryID", inventoryItem.ID)
 }
