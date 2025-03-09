@@ -27,9 +27,9 @@ func (r *inventoryRepo) SaveAll(items []models.InventoryItem) error {
 	}
 
 	for _, item := range items {
-		_, err = tx.Exec(`INSERT INTO inventory (ingredient_id, name, quantity, unit)
+		_, err = r.DB.Exec(`INSERT INTO inventory (ingredient_id, name, quantity, unit)
 	VALUES ($1, $2, $3, $4)
-	`, item.IngredientID, item.Name, item.Quantity, item.Unit)
+	`, item.ID, item.Name, item.Quantity, item.Unit)
 		if err != nil {
 			tx.Rollback()
 			return err
@@ -48,7 +48,7 @@ func (r *inventoryRepo) GetAll() ([]models.InventoryItem, error) {
 	var items []models.InventoryItem
 	for rows.Next() {
 		var item models.InventoryItem
-		if err := rows.Scan(&item.IngredientID, &item.Name, &item.Quantity, &item.Unit); err != nil {
+		if err := rows.Scan(&item.ID, &item.Name, &item.Quantity, &item.Unit); err != nil {
 			return nil, err
 		}
 		items = append(items, item)
@@ -66,9 +66,38 @@ func (r *inventoryRepo) Exists(item models.InventoryItem) (bool, error) {
 	}
 
 	for _, inventory := range inventoryData {
-		if inventory.IngredientID == item.IngredientID {
+		if inventory.ID == item.ID {
 			return true, nil
 		}
 	}
 	return false, nil
 }
+
+func (r *inventoryRepo) UpdateAll(item models.InventoryItem) error {
+	tx, err := r.DB.Begin()
+	if err != nil {
+		return err
+	}
+	query := `
+    UPDATE inventory
+    SET quantity = $1,
+        updated_at = CURRENT_TIMESTAMP
+    WHERE ingredient_id = $2;
+	`
+	_, err = tx.Exec(query, item.Quantity, item.ID)
+	if err != nil {
+		tx.Rollback()
+		return err
+	}
+
+	return tx.Commit()
+}
+
+func (r *inventoryRepo) Insert(item models.InventoryItem) error {
+	_, err := r.DB.Exec(`
+		INSERT INTO inventory (ingredient_id, name, quantity, unit)
+		VALUES ($1, $2, $3, $4)
+	`, item.ID, item.Name, item.Quantity, item.Unit)
+	return err
+}
+
