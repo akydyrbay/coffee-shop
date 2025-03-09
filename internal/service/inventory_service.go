@@ -22,26 +22,24 @@ type inventoryService struct {
 func NewInventoryService(inventoryRepo dal.InventoryRepository) *inventoryService {
 	return &inventoryService{inventoryRepo: inventoryRepo}
 }
+func (s *inventoryService) AddInventoryItem(items []models.InventoryItem) error {
+	for _, item := range items {
+		if !IsInventoryValid(item) {
+			return errors.New("invalid inventory item")
+		}
 
-func (s *inventoryService) AddInventoryItem(item models.InventoryItem) error {
-	if !IsInventoryValid(item) {
-		return errors.New("invalid inventory item")
+		exists, err := s.inventoryRepo.Exists(item)
+		if err != nil {
+			return fmt.Errorf("failed to check existence: %w", err)
+		}
+		if exists {
+			return errors.New("item already exists")
+		}
+
+		if err := s.inventoryRepo.Insert(item); err != nil {
+			return fmt.Errorf("failed to insert inventory item: %w", err)
+		}
 	}
-	inventories, err := s.inventoryRepo.GetAll()
-	if err != nil {
-		return errors.New("failed to get inventory items")
-	}
-
-	if b, _ := s.inventoryRepo.Exists(item); b {
-		return errors.New("item already exists")
-	}
-
-	inventories = append(inventories, item)
-
-	if err := s.inventoryRepo.SaveAll(inventories); err != nil {
-		return errors.New("failed to save inventory items")
-	}
-
 	return nil
 }
 
@@ -52,13 +50,14 @@ func (s *inventoryService) DeleteInventoryItem(id string) error {
 	}
 
 	for i, inventory := range inventories {
-		if inventory.IngredientID == id {
+		if inventory.ID == id {
 			inventories = append(inventories[:i], inventories[i+1:]...)
 		}
+		if err := s.inventoryRepo.Insert(inventory); err != nil {
+			return fmt.Errorf("failed to insert inventory item: %w", err)
+		}
 	}
-	if err := s.inventoryRepo.SaveAll(inventories); err != nil {
-		return err
-	}
+
 	return nil
 }
 
@@ -77,7 +76,7 @@ func (s *inventoryService) GetInventoryItemById(id string) (models.InventoryItem
 		return models.InventoryItem{}, err
 	}
 	for _, inventoryItem := range inventoryItems {
-		if inventoryItem.IngredientID == id {
+		if inventoryItem.ID == id {
 			return inventoryItem, nil
 		}
 	}
@@ -90,10 +89,8 @@ func (s *inventoryService) UpdateInventoryItem(item models.InventoryItem) error 
 		return err
 	}
 	for i := range inventoryItems {
-		if inventoryItems[i].IngredientID == item.IngredientID {
-
-			inventoryItems[i].Quantity += item.Quantity
-			err = s.inventoryRepo.SaveAll(inventoryItems)
+		if inventoryItems[i].ID == item.ID {
+			err = s.inventoryRepo.UpdateAll(item)
 			if err != nil {
 				return err
 			}
