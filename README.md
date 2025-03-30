@@ -1,5 +1,5 @@
 # coffee-shop
-
+Update some funcs
 # Project Overview
 This project focuses on data storage solution on PostgreSQL relational database for managing business operations. The goal is to refactor existing handlers and the data access layer (repositories) to interact with PostgreSQL using SQL queries, improving scalability and maintainability. In addition to the refactor, features for aggregation and reporting will be implemented to leverage PostgreSQL's powerful querying capabilities.
 
