@@ -1,5 +1,4 @@
 # coffee-shop
-# Usage
 ## to check:
 ```bash
 docker ps
