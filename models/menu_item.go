@@ -1,14 +1,19 @@
 package models
 
 type MenuItem struct {
-	ID          string               `json:"product_id"`
+	ID          int                  `json:"id"`
 	Name        string               `json:"name"`
 	Description string               `json:"description"`
-	Price       float64              `json:"price"`
+	Category    string               `json:"category"`
+	Price       float64              `json:"current_price"`
+	IsAvailable bool                 `json:"is_available"`
 	Ingredients []MenuItemIngredient `json:"ingredients"`
+	Relevance   float64              `json:"relevance"`
 }
 
 type MenuItemIngredient struct {
-	IngredientID string  `json:"ingredient_id"`
+	MenuItemID   int     `json:"menu_item_id"`
+	IngredientID int     `json:"ingredient_id"`
 	Quantity     float64 `json:"quantity"`
+	Name         string  `json:"name"`
 }

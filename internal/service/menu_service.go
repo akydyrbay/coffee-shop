@@ -2,17 +2,17 @@ package service
 
 import (
 	"errors"
-
-	"coffee-shop/internal/dal"
-	"coffee-shop/models"
+	"fmt"
+	"frappuccino/internal/dal"
+	"frappuccino/models"
 )
 
 type MenuServiceInterface interface {
-	AddMenuItem(item models.MenuItem) error
-	GetAllMenuItems() ([]models.MenuItem, error)
-	GetMenuItemById(id string) (models.MenuItem, error)
-	UpdateMenuItem(item models.MenuItem) error
-	DeleteMenuItemById(id string) error
+	Create(items []models.MenuItem) models.Status
+	ReadAll() ([]models.MenuItem, models.Status)
+	Read(id int) (models.MenuItem, models.Status)
+	Update(item models.MenuItem) models.Status
+	Delete(id int) models.Status
 }
 
 type menuService struct {
@@ -23,82 +23,79 @@ func NewMenuService(menuRepo dal.MenuRepository) *menuService {
 	return &menuService{menuRepo: menuRepo}
 }
 
-func (s *menuService) AddMenuItem(item models.MenuItem) error {
-	if !IsMenuValid(item) {
-		return errors.New("invalid menu item")
+func (s *menuService) Create(items []models.MenuItem) models.Status {
+	for _, item := range items {
+		if !IsMenuValid(item) {
+			return models.Status{ErrorMessage: errors.New("invalid menu item"), Code: 400}
+		}
+
+		exists, err := s.menuRepo.Exists(item.ID)
+		if err != nil {
+			return models.Status{ErrorMessage: fmt.Errorf("failed to check existence: %w", err), Code: 500}
+		}
+		if exists {
+			return models.Status{ErrorMessage: errors.New("menu item already exists"), Code: 400}
+		}
 	}
-	menuItems, err := s.menuRepo.GetAll()
-	if err != nil {
-		return err
+	for _, item := range items {
+		item.IsAvailable = true
+		if err := s.menuRepo.Insert(item); err != nil {
+			return models.Status{ErrorMessage: fmt.Errorf("failed to insert menu item: %w", err), Code: 500}
+		}
 	}
-	pres, err := s.menuRepo.Exists(item.ID)
-	if err != nil {
-		return err
-	}
-	if pres {
-		return errors.New("menu item already exists")
-	}
-	menuItems = append(menuItems, item)
-	err = s.menuRepo.SaveAll(menuItems)
-	if err != nil {
-		return err
-	}
-	return nil
+	return models.Status{ErrorMessage: nil, Code: 200}
 }
 
-func (s *menuService) GetAllMenuItems() ([]models.MenuItem, error) {
+func (s *menuService) ReadAll() ([]models.MenuItem, models.Status) {
 	menuItems, err := s.menuRepo.GetAll()
 	if err != nil {
-		return nil, err
+		return nil, models.Status{ErrorMessage: fmt.Errorf("failed to get menu items: %w", err), Code: 500}
 	}
-	return menuItems, nil
+	return menuItems, models.Status{ErrorMessage: nil, Code: 200}
 }
 
-func (s *menuService) GetMenuItemById(id string) (models.MenuItem, error) {
+func (s *menuService) Read(id int) (models.MenuItem, models.Status) {
 	menuItems, err := s.menuRepo.GetAll()
 	if err != nil {
-		return models.MenuItem{}, err
+		return models.MenuItem{}, models.Status{ErrorMessage: fmt.Errorf("failed to get menu items: %w", err), Code: 500}
 	}
 	for _, menuItem := range menuItems {
 		if menuItem.ID == id {
-			return menuItem, nil
+			return menuItem, models.Status{ErrorMessage: nil, Code: 200}
 		}
 	}
-	return models.MenuItem{}, errors.New("menu item not found")
+	return models.MenuItem{}, models.Status{ErrorMessage: errors.New("menu item not found"), Code: 404}
 }
 
-func (s *menuService) UpdateMenuItem(item models.MenuItem) error {
-	menuItems, err := s.menuRepo.GetAll()
-	if err != nil {
-		return err
-	}
+func (s *menuService) Update(item models.MenuItem) models.Status {
 	if !IsMenuValid(item) {
-		return errors.New("invalid menu item")
+		return models.Status{ErrorMessage: errors.New("invalid menu item"), Code: 400}
 	}
-	for i := range menuItems {
-		if menuItems[i].ID == item.ID {
-			menuItems[i] = item
-			err = s.menuRepo.SaveAll(menuItems)
-			if err != nil {
-				return err
-			}
-			return nil
-		}
+	exists, err := s.menuRepo.Exists(item.ID)
+	if err != nil {
+		return models.Status{ErrorMessage: fmt.Errorf("failed to check existence: %w", err), Code: 500}
 	}
-	return errors.New("menu item not found")
+	if !exists {
+		return models.Status{ErrorMessage: errors.New("menu item not found"), Code: 404}
+	}
+
+	if err := s.menuRepo.Update(item); err != nil {
+		return models.Status{ErrorMessage: fmt.Errorf("failed to update menu item: %w", err), Code: 500}
+	}
+	return models.Status{ErrorMessage: nil, Code: 200}
 }
 
-func (s *menuService) DeleteMenuItemById(id string) error {
-	menuItems, err := s.menuRepo.GetAll()
+func (s *menuService) Delete(id int) models.Status {
+	exists, err := s.menuRepo.Exists(id)
 	if err != nil {
-		return err
+		return models.Status{ErrorMessage: fmt.Errorf("failed to check existence: %w", err), Code: 500}
 	}
-	for index, menuItem := range menuItems {
-		if menuItem.ID == id {
-			menuItems = append(menuItems[:index], menuItems[index+1:]...)
-			s.menuRepo.SaveAll(menuItems)
-			return nil
-		}
+	if !exists {
+		return models.Status{ErrorMessage: errors.New("menu item not found"), Code: 404}
 	}
-	return errors.New("menu item not found")
+
+	if err := s.menuRepo.DeleteItem(id); err != nil {
+		return models.Status{ErrorMessage: fmt.Errorf("failed to delete menu item: %w", err), Code: 500}
+	}
+	return models.Status{Code: 204} // No content for successful deletion
 }

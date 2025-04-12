@@ -1,18 +1,35 @@
 package models
 
+import "time"
+
 type Order struct {
-	ID           string      `json:"order_id"`
-	CustomerName string      `json:"customer_name"`
-	Items        []OrderItem `json:"items"`
-	Status       string      `json:"status"`
-	CreatedAt    string      `json:"created_at"`
+	ID          int         `json:"id"`
+	CustomerID  int         `json:"customer_id"`
+	TotalAmount float64     `json:"total_amount"`
+	Items       []OrderItem `json:"items"`
+	Status      string      `json:"status"`
+	CreatedAt   time.Time   `json:"created_at"`
 }
 
 type OrderItem struct {
-	ProductID string `json:"product_id"`
-	Quantity  int    `json:"quantity"`
+	// ID         int     `json:"id"`
+	OrderID    int     `json:"order_id"`
+	MenuItemID int     `json:"menu_item_id"`
+	Quantity   float64 `json:"quantity"`
+	UnitPrice  float64 `json:"unit_price"`
 }
 
-type TotalSales struct {
-	Sales float64 `json:"total_sales: "`
+type OrderStatusHistory struct {
+	ID        int    `json:"id"`
+	OrderID   int    `json:"order_id"`
+	Notes     string `json:"notes"`
+	UpdatedAt string `json:"updated_at"`
+}
+
+type OrderSearchResult struct {
+	ID           int      `json:"id"`
+	CustomerName string   `json:"customer_name"`
+	Total        float64  `json:"total_amount"`
+	Items        []string `json:"items"`
+	Relevance    float64  `json:"relevance"`
 }
