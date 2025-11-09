@@ -1,55 +1,74 @@
 # coffee-shop
-## to check:
-```bash
-docker ps
-```
-## launch psql:
-```bash
-docker-compose up --build
-```
-``` bash
-docker exec -it frappuccino_db_1 bash
-psql -U latte -d frappuccino
-```
-## to fix issues and ensure the table are created
-```bash
-docker-compose down -v
-```
-```bash
-chmod 644 init.sql
-```
-```bash
-docker-compose up --build
-or
-docker-compose up
-```
-## Project Overview
-This project focuses on data storage solution on PostgreSQL relational database for managing business operations. The goal is to refactor existing handlers and the data access layer (repositories) to interact with PostgreSQL using SQL queries, improving scalability and maintainability. In addition to the refactor, new features for aggregation and reporting will be implemented to leverage PostgreSQL's powerful querying capabilities.
 
-By moving to PostgreSQL, the application can benefit from the robustness of relational databases, allowing for more complex operations, easier data consistency, and improved performance. You will gain hands-on experience with SQL, PostgreSQL, and the principles of database design, including table relationships and advanced data types.
+A coffee shop management system built with Go and PostgreSQL, featuring advanced database operations and RESTful APIs.
 
-## Learning Objectives
-1. SQL
-Develop proficiency in writing SQL queries to interact with relational databases.
-Implement basic CRUD (Create, Read, Update, Delete) operations using SQL.
-Use more complex SQL queries involving JOINs, subqueries, and aggregation functions.
-Learn to optimize queries for better performance and scalability.
-2. PostgreSQL
-Understand PostgreSQL’s unique features like JSONB, Arrays, ENUMs, and Timestamps.
-Learn how to design efficient and normalized database schemas.
-Leverage PostgreSQL’s advanced data types for storing and querying data efficiently.
-3. CRUD Operations
-Refactor and implement CRUD operations for managing business data (e.g., orders, customers, products).
-Ensure data integrity and optimize relational operations for scalability.
-4. ERD (Entity-Relationship Diagram)
-Design and document an Entity-Relationship Diagram (ERD) to model the relationships between key business entities.
-Implement the database schema based on the ERD, ensuring proper relationships and constraints are defined.
-Abstract
-This project involves refactoring an application to transition from a JSON-based data store to a relational database using PostgreSQL. The primary task is to replace existing JSON-based data handlers with SQL queries to interact with a relational database. This transition involves designing and implementing a database schema with appropriate tables, relationships, and constraints.
+## Features
 
-In addition, new features will be implemented for reporting and aggregation, such as tracking inventory changes, calculating sales data, and monitoring status changes in business operations. PostgreSQL’s advanced SQL functions, including aggregation tools, will be leveraged to enable complex reporting and analysis.
+- **Order Management**: Complete CRUD operations for orders
+- **Menu Management**: Menu item catalog with pricing
+- **Inventory Control**: Stock tracking and management
+- **Advanced Reporting**: Sales analytics and search functionality
+- **Containerized**: Easy deployment with Docker
 
-## Context
-As systems scale, databases that rely on JSON for data storage often become difficult to manage and maintain. Relational databases, like PostgreSQL, provide more robust data management, scalability, and advanced querying capabilities, making them a better solution for growing applications. This project aims to address the challenges of using a JSON-based system by transitioning to a more structured, performant, and scalable PostgreSQL database.
+## Tech Stack
 
-The project will involve creating a normalized database schema, defining the relationships between entities, and refactoring the application to use SQL queries for CRUD operations. Additionally, it will introduce new functionality for aggregating and reporting business metrics, leveraging PostgreSQL’s powerful aggregation capabilities.
+- **Backend**: Go
+- **Database**: PostgreSQL
+- **Containerization**: Docker & Docker Compose
+
+## Quick Start
+
+```bash
+docker compose up
+```
+
+### Core Database Tables
+
+1. **orders** - Main order information with status tracking
+2. **order_items** - Individual items within each order
+3. **menu_items** - Product catalog with pricing
+4. **menu_item_ingredients** - Recipe and ingredient relationships
+5. **inventory** - Stock level management
+6. **order_status_history** - Complete order lifecycle tracking
+7. **price_history** - Historical pricing data
+8. **inventory_transactions** - Stock movement records
+
+### Database Connection
+- **Host**: db
+- **Port**: 5432
+- **User**: latte
+- **Password**: latte
+- **Database**: frappuccino
+
+## API Endpoints
+
+### Order Management
+- `POST /orders` - Create new order
+- `GET /orders` - Retrieve all orders
+- `GET /orders/{id}` - Get specific order
+- `PUT /orders/{id}` - Update order
+- `DELETE /orders/{id}` - Delete order
+- `POST /orders/{id}/close` - Close order
+- `POST /orders/batch-process` - Bulk order processing
+
+### Menu Management
+- `POST /menu` - Add menu item
+- `GET /menu` - Get all menu items
+- `GET /menu/{id}` - Get specific menu item
+- `PUT /menu/{id}` - Update menu item
+- `DELETE /menu/{id}` - Delete menu item
+
+### Inventory Management
+- `POST /inventory` - Add inventory item
+- `GET /inventory` - Get all inventory items
+- `GET /inventory/{id}` - Get specific inventory item
+- `PUT /inventory/{id}` - Update inventory item
+- `DELETE /inventory/{id}` - Delete inventory item
+- `GET /inventory/getLeftOvers` - Get inventory leftovers with pagination
+
+### Reporting & Analytics
+- `GET /reports/total-sales` - Total sales amount
+- `GET /reports/popular-items` - Popular menu items
+- `GET /reports/search` - Full text search across orders and menu
+- `GET /orders/numberOfOrderedItems` - Ordered items by time period
+- `GET /reports/orderedItemsByPeriod` - Order statistics by day/month
